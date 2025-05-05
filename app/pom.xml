@@ -7,12 +7,11 @@
 
     <parent>
         <groupId>se.iths.java24.se</groupId>
-        <artifactId>spi-laboration</artifactId> <!-- Här är ditt huvudprojekt -->
+        <artifactId>spi-laboration</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>app</artifactId>
-
     <packaging>jar</packaging>
 
     <properties>
@@ -22,28 +21,37 @@
     </properties>
 
     <dependencies>
+        <!-- API behövs vid kompilering -->
         <dependency>
             <groupId>se.iths.java24.se</groupId>
             <artifactId>api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!-- IMPLEMENTATION behövs bara vid körning (SPI discovery) -->
         <dependency>
             <groupId>se.iths.java24.se</groupId>
             <artifactId>implementation</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!-- Kör din main-klass via mvn exec:java -->
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>exec-maven-plugin</artifactId>
-                <version>3.5.0</version>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
                 <configuration>
-                    <mainClass>se.iths.java24.app.ConsoleApplication</mainClass> <!-- Här anger du din main-klass -->
+                    <archive>
+                        <manifest>
+                            <mainClass>se.iths.java24.app.ConsoleApplication</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
+
             </plugin>
         </plugins>
     </build>

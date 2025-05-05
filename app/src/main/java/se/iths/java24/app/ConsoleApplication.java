@@ -1,7 +1,6 @@
 package se.iths.java24.app;
 
 import se.iths.java24.api.CurrencyConverter;
-import se.iths.java24.implementation.CurrencyConverterFactory;
 
 import java.util.Scanner;
 import java.util.Set;

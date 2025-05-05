@@ -1,10 +1,10 @@
-package se.iths.java24.implementation;
+package se.iths.java24.app;
 
 import se.iths.java24.api.CurrencyConverter;
 import se.iths.java24.api.ImplementationInfo;
 
-import java.util.Set;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.ServiceLoader;
 
 public class CurrencyConverterFactory {
@@ -16,8 +16,10 @@ public class CurrencyConverterFactory {
 
         for (CurrencyConverter converter : serviceLoader) {
             ImplementationInfo annotation = converter.getClass().getAnnotation(ImplementationInfo.class);
-            if (annotation != null && annotation.value().equalsIgnoreCase(type)) {
-                return converter;
+            if (annotation != null) {
+                if (annotation.value().equalsIgnoreCase(type)) {
+                    return converter;
+                }
             }
         }
         throw new IllegalArgumentException("Unsupported converter type: " + type);
@@ -32,6 +34,8 @@ public class CurrencyConverterFactory {
             ImplementationInfo annotation = converter.getClass().getAnnotation(ImplementationInfo.class);
             if (annotation != null) {
                 converters.add(annotation.value());
+            } else {
+                System.out.println("Warning: No ImplementationInfo annotation found on " + converter.getClass().getName());
             }
         }
         return converters;
